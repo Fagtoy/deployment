@@ -79,11 +79,11 @@ drwxrwxr-x 16 yang yang     4096 Jul  8 06:43 ../
     - ```$ su yang```
     - ```$ ./cronjob```
 
-15. After the end of cronjob-daily (the first time it can take up to one hour), it is recommended to run the [draftPullLocal.py](../backend/ietfYangDraftPull/draftPullLocal.py) script, which populates the basic set of modules into the databases:
+15. After the end of cronjob-daily (the first time it can take up to one hour), it is recommended to run the [ietf_pull_local.py](../backend/ietfYangDraftPull/ietf_pull_local.py) script, which populates the basic set of modules into the databases:
     - ```$ docker exec -it yc-backend bash```
     - ```$ cd ietfYangDraftPull```
     - ```$ su yang```
-    - ```$ python3 draftPullLocal.py```
+    - ```$ python3 ietf_pull_local.py```
 
 ## Recreate all containers
 

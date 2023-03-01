@@ -145,6 +145,7 @@ services:
       - ${YANG_RESOURCES}/nginx/results:/usr/share/nginx/html/results:rw
       - ${YANG_RESOURCES}/nginx/stats:/usr/share/nginx/html/stats:rw
       - ${YANG_RESOURCES}/nginx/YANG-modules:/usr/share/nginx/html/YANG-modules:rw
+      - ${YANG_RESOURCES}/all_modules:/usr/share/nginx/html/all_modules:ro
       - ${YANG_RESOURCES}/nginx/notifications:/usr/share/nginx/html/notifications:rw
       - ${NGINX_LOG}:/var/log/nginx:rw
       - ${KEY_FILE}:/a/system/yangcatalog.org.key
@@ -214,36 +215,36 @@ services:
       retries: 5      
     restart: always
 
-  # elasticsearch:
-  #   container_name: yc-elasticsearch
-  #   build:
-  #     context: elasticsearch
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - ELASTICSEARCH_ID=${ELASTICSEARCH_ID}
-  #       - ELASTICSEARCH_GID=${ELASTICSEARCH_GID}
-  #   environment:
-  #     - bootstrap.memory_lock=true
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   volumes:
-  #     - ${ELASTICSEARCH_LOG}:/var/log/elasticsearch
-  #     - ${ELASTICSEARCH_DATA}:/var/lib/elasticsearch
-  #   networks:
-  #     - elasticsearch
-  #   restart: always
+  elasticsearch:
+   container_name: yc-elasticsearch
+   build:
+     context: elasticsearch
+     dockerfile: Dockerfile
+     args:
+       - ELASTICSEARCH_ID=${ELASTICSEARCH_ID}
+       - ELASTICSEARCH_GID=${ELASTICSEARCH_GID}
+   environment:
+     - bootstrap.memory_lock=true
+   ulimits:
+     memlock:
+       soft: -1
+       hard: -1
+   volumes:
+     - ${ELASTICSEARCH_LOG}:/var/log/elasticsearch
+     - ${ELASTICSEARCH_DATA}:/var/lib/elasticsearch
+   networks:
+     - elasticsearch
+   restart: always
 
-  # kibana:
-  #   container_name: yc-kibana
-  #   depends_on:
-  #     - elasticsearch
-  #   image: kibana:7.10.1
-  #   ports:
-  #     - '5601:5601'
-  #   networks:
-  #     - elasticsearch
+  kibana:
+   container_name: yc-kibana
+   depends_on:
+     - elasticsearch
+   image: kibana:7.10.1
+   ports:
+     - '5601:5601'
+   networks:
+     - elasticsearch
 
   # matomo:
   #   container_name: yc-matomo
